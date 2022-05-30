@@ -8,7 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const API_URL = 'http://127.0.0.1:8080';
+const API_URL = 'http://34.82.189.49:8080';
 const API_HEADERS = {
     'Content-Type': 'application/json',
 };
@@ -82,7 +82,9 @@ export default class BoatStateBoard extends Component {
       headers: API_HEADERS,
       body: JSON.stringify(updatedCards),
     })
-    .then(() => {
+    .then( (response) => response.json())
+    .then( (responseData) => {
+      console.log(responseData);
       this.handleClose();
     })
     .catch( (error) => {
