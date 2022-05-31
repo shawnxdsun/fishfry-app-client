@@ -21,7 +21,8 @@ export default class BoatStateBoard extends Component {
           lanes: []
         },
         dialogOpen: false,
-        dialogInput: '',
+        dialogInputBoatName: '',
+        dialogInputGuideName:'',
     };
   }
 
@@ -34,6 +35,7 @@ export default class BoatStateBoard extends Component {
     })
     .catch( (error) => {
       console.log('error fetching and parsing data', error);
+      alert('fetching data failed');
     });
     console.log("reMount");
   };
@@ -46,9 +48,15 @@ export default class BoatStateBoard extends Component {
   };
 
   //handle dialog input change
-  handleDialogInputChange(e){
+  handleDialogInputBoatChange(e){
     this.setState({
-      dialogInput: e.target.value
+      dialogInputBoatName: e.target.value
+    })
+  }
+
+  handleDialogInputGuideChange(e){
+    this.setState({
+      dialogInputGuideName: e.target.value
     })
   }
 
@@ -65,9 +73,16 @@ export default class BoatStateBoard extends Component {
     const updatedCards = {
       lanes: this.state.cards.lanes.map((item) => {
         if (item.id === 'lane1'){
-          item.cards.push({id: (Math.floor((Math.random() * 1000000) + 1)).toString(), title: this.state.dialogInput, description: 'Transfer via NEFT', label: '5 mins', laneId: "lane1", metadata: {sha: 'be312a1'}});
+          item.cards.push({
+            id: (Math.floor((Math.random() * 1000000) + 1)).toString(), 
+            title: this.state.dialogInputBoatName, 
+            description: this.state.dialogInputGuideName, 
+            laneId: "lane1", 
+            metadata: {sha: 'be312a1'}});
+          item.label = item.cards.length.toString();
           return item
         }
+        item.label = item.cards.length.toString();
         return item;
       }),
     };
@@ -87,13 +102,21 @@ export default class BoatStateBoard extends Component {
     })
     .catch( (error) => {
       console.log('error updating cards:', error);
-      // to do: show snack bar
+      alert('update board failed');
     });
   }
 
   handleDataChange(data){
+
+    const updatedCards = {
+      lanes: data.lanes.map((item) => {
+          item.label = item.cards.length.toString();
+          return item;
+      }),
+    };
+
     this.setState({
-      cards: data
+      cards: updatedCards
     })
     fetch(API_URL + '/updateCards', {
       method: 'POST',
@@ -106,6 +129,7 @@ export default class BoatStateBoard extends Component {
     })
     .catch( (error) => {
       console.log('error updating cards:', error);
+      alert('update board failed');
     });
   }
 
@@ -133,8 +157,19 @@ export default class BoatStateBoard extends Component {
                   type="text"
                   fullWidth
                   variant="standard"
-                  value={this.state.dialogInput}
-                  onChange={this.handleDialogInputChange.bind(this)}
+                  value={this.state.dialogInputBoatName}
+                  onChange={this.handleDialogInputBoatChange.bind(this)}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Guide Name"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  value={this.state.dialogInputGuideName}
+                  onChange={this.handleDialogInputGuideChange.bind(this)}
                 />
               </DialogContent>
               <DialogActions>
