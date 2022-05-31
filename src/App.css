@@ -37,7 +37,30 @@
   }
 }
 
-.react-trello-board {
-  /*background-color: white !important;*/
-  /*height: auto !important;*/
+@media screen and (min-width: 800px) {
+  .react-trello-board {
+    text-align:left;
+  }
+  
+  #add-boat-board {
+    display: inline-block !important;
+  }
+  
+  #add-boat-board-container {
+    text-align: center;
+  }
+}
+
+#state-header {
+  color: gray;
+  font-size: 1.5em;
+  height: 40px;
+  text-align: center;
+  margin: 40px;
+}
+
+#add-boat-button {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
