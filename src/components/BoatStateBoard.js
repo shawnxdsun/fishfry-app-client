@@ -61,7 +61,6 @@ export default class BoatStateBoard extends Component {
 
   //handle add new boat
   handleAddCard() {
-    this.handleClose();
     //get updated cards
     const updatedCards = {
       lanes: this.state.cards.lanes.map((item) => {
@@ -72,11 +71,10 @@ export default class BoatStateBoard extends Component {
         return item;
       }),
     };
-   
     this.setState({
       cards: updatedCards
-    })
-    
+    })  
+    this.handleClose();
     //update cards on server
     fetch(API_URL + '/updateCards', {
       method: 'POST',
@@ -94,11 +92,19 @@ export default class BoatStateBoard extends Component {
   }
 
   handleDataChange(data){
+    this.setState({
+      cards: data
+    })
     fetch(API_URL + '/updateCards', {
       method: 'POST',
       headers: API_HEADERS,
       body: JSON.stringify(data),
-    }).catch( (error) => {
+    })
+    .then( (response) => response.json())
+    .then( (responseData) => {
+      console.log(responseData);
+    })
+    .catch( (error) => {
       console.log('error updating cards:', error);
     });
   }
@@ -139,7 +145,7 @@ export default class BoatStateBoard extends Component {
           </div>
           <div id="add-boat-board-container" data-testid="boat-state-board-add-boat-container">
             <div id="add-boat-board">
-            <Board data={this.state.cards} onDataChange={this.handleDataChange.bind(this)} laneStyle={{backgroundColor: '#666'}} style={{backgroundColor: '#eee'}}/>
+              <Board data={this.state.cards} onDataChange={this.handleDataChange.bind(this)} laneStyle={{backgroundColor: '#666'}} style={{backgroundColor: '#eee'}}/>
             </div>
           </div>
         </div>
