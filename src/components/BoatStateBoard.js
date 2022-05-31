@@ -8,7 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const API_URL = 'http://34.82.189.49:8080';
+const API_URL = 'http://34.168.188.168:8080';
 const API_HEADERS = {
     'Content-Type': 'application/json',
 };
