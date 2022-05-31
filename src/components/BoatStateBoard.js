@@ -12,7 +12,6 @@ const API_URL = 'http://34.82.189.49:8080';
 const API_HEADERS = {
     'Content-Type': 'application/json',
 };
-const CustomAddCardLink =  ({onClick, t}) => <button onClick={onClick}>{t('Click to add card')}</button>
 
 export default class BoatStateBoard extends Component {
   constructor(props) {
@@ -107,13 +106,13 @@ export default class BoatStateBoard extends Component {
   render() {
     return (
       <>
-        <div>
-          <div id="add-boat-button">
+        <div data-testid="boat-state-board">
+          <div id="add-boat-button" data-testid="boat-state-board-add-boat-button">
             <Button variant="contained" color="info" onClick={this.handleClickOpen.bind(this)}>
               Add Boat
             </Button>
           </div>
-          <div id="add-boat-dialog">
+          <div id="add-boat-dialog" data-testid="boat-state-board-add-boat-dialog">
             <Dialog open={this.state.dialogOpen} onClose={this.handleClose.bind(this)}>
               <DialogTitle>Add Boat</DialogTitle>
               <DialogContent>
@@ -138,9 +137,9 @@ export default class BoatStateBoard extends Component {
               </DialogActions>
             </Dialog>
           </div>
-          <div id="add-boat-board-container">
+          <div id="add-boat-board-container" data-testid="boat-state-board-add-boat-container">
             <div id="add-boat-board">
-            <Board data={this.state.cards} onDataChange={this.handleDataChange.bind(this)} laneStyle={{backgroundColor: '#666'}} style={{backgroundColor: '#eee'}} components={{AddCardLink: CustomAddCardLink}}/>
+            <Board data={this.state.cards} onDataChange={this.handleDataChange.bind(this)} laneStyle={{backgroundColor: '#666'}} style={{backgroundColor: '#eee'}}/>
             </div>
           </div>
         </div>

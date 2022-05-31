@@ -8,8 +8,8 @@ class App extends Component {
   render() {
     return (
       <Container>
-        <BoatStateHeader />
-        <BoatStateBoard />
+        <BoatStateHeader data-testid="boat-state-header"/>
+        <BoatStateBoard data-testid="boat-state-board"/>
       </Container>
     );
   }
